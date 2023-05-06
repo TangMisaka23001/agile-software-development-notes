@@ -30,4 +30,11 @@ public class TestFrame extends TestCase {
         assertEquals(5, g.score());
     }
 
+    public void testTwoThrowsNoMark() {
+        Game g = new Game();
+        g.add(5);
+        g.add(4);
+        assertEquals(9, g.score());
+    }
+
 }
