@@ -18,4 +18,10 @@ public class TestFrame extends TestCase {
         assertEquals(0, f.getScore());
     }
 
+    public void testAddOneThrow() {
+        Frame f = new Frame();
+        f.add(5);
+        assertEquals(5, f.getScore());
+    }
+
 }
