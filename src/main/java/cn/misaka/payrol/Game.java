@@ -22,9 +22,10 @@ public class Game {
     }
 
     public int scoreForFrame(int frame) {
+        int ball = 0;
         int score = 0;
-        for (int ball = 0; frame > 0 && (ball < itsCurrentThrow); ball += 2, frame--) {
-            score += itsThrows[ball] + itsThrows[ball + 1];
+        for (int currentFrame = 0; currentFrame < frame; currentFrame++) {
+            score += itsThrows[ball++] + itsThrows[ball++];
         }
         return score;
     }
