@@ -64,4 +64,12 @@ public class TestGame extends TestCase {
         assertEquals(28, g.score());
         assertEquals(3, g.getCurrentFrame());
     }
+
+    public void testPerfectGame() {
+        for (int i = 0; i < 12; i++) {
+            g.add(10);
+        }
+        assertEquals(300, g.score());
+        assertEquals(11, g.getCurrentFrame());
+    }
 }
