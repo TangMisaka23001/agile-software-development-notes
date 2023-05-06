@@ -7,11 +7,15 @@ package cn.misaka.payrol;
  */
 public class Game {
 
+    private int ball;
+    private int firstThrow;
+    private int secondThrow;
+
     private int itsScore = 0;
     private int[] itsThrows = new int[21];
     private int itsCurrentThrow = 0;
     private int itsCurrentFrame = 1;
-    private boolean firstThrow = true;
+    private boolean firstThrowInFrame = true;
 
     public int score() {
         return scoreForFrame(getCurrentFrame() - 1);
@@ -24,38 +28,55 @@ public class Game {
     }
 
     private void adjustCurrentFrame(int pins) {
-        if (firstThrow) {
+        if (firstThrowInFrame) {
             if (pins == 10) { // strike
                 itsCurrentFrame++;
             } else {
-                firstThrow = false;
+                firstThrowInFrame = false;
             }
         } else {
-            firstThrow = true;
+            firstThrowInFrame = true;
             itsCurrentFrame++;
         }
         itsCurrentFrame = Math.min(11, itsCurrentFrame);
     }
 
     public int scoreForFrame(int frame) {
-        int ball = 0;
+        ball = 0;
         int score = 0;
         for (int currentFrame = 0; currentFrame < frame; currentFrame++) {
-            int firstThrow = itsThrows[ball++];
-            if (firstThrow == 10) {
-                score += 10 + itsThrows[ball] + itsThrows[ball + 1];
+            if (strike()) {
+                score += 10 + nextTowBallsForStrike();
+                ball++;
+            } else if (spare()) {
+                score += 10 + nextBallForSpare();
+                ball += 2;
             } else {
-                int secondThrow = itsThrows[ball++];
-                int frameScore = firstThrow + secondThrow;
-                // spare needs next frames first throw
-                if (frameScore == 10) {
-                    score += frameScore + itsThrows[ball];
-                } else {
-                    score += frameScore;
-                }
+                score += towBallsInFrame();
+                ball += 2;
             }
         }
         return score;
+    }
+
+    private int nextTowBallsForStrike() {
+        return itsThrows[ball + 1] + itsThrows[ball + 2];
+    }
+
+    private boolean strike() {
+        return itsThrows[ball] == 10;
+    }
+
+    private int towBallsInFrame() {
+        return itsThrows[ball] + itsThrows[ball + 1];
+    }
+
+    private int nextBallForSpare() {
+        return itsThrows[ball + 2];
+    }
+
+    private boolean spare() {
+        return (itsThrows[ball] + itsThrows[ball + 1]) == 10;
     }
 
     public int getCurrentFrame() {
