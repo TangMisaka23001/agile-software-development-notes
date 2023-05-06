@@ -22,16 +22,25 @@ public class Game {
 
     private void adjustCurrentFrame(int pins) {
         if (firstThrowInFrame) {
-            if (pins == 10) { // strike
-                itsCurrentFrame++;
-            } else {
+            if (adjustFrameForStrike(pins) == false) { // strike
                 firstThrowInFrame = false;
             }
         } else {
             firstThrowInFrame = true;
-            itsCurrentFrame++;
+            advanceFrame();
         }
-        itsCurrentFrame = Math.min(11, itsCurrentFrame);
+    }
+
+    private boolean adjustFrameForStrike(int pins) {
+        if (pins == 10) {
+            advanceFrame();
+            return true;
+        }
+        return false;
+    }
+
+    private void advanceFrame() {
+        itsCurrentFrame = Math.min(11, itsCurrentFrame + 1);
     }
 
     public int getCurrentFrame() {
