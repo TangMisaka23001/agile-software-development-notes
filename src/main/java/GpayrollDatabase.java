@@ -18,6 +18,10 @@ public class GpayrollDatabase {
         itsEmployees.put(empId, employee);
     }
 
+    public static void deleteEmployee(int empId) {
+        itsEmployees.remove(empId);
+    }
+
     public static void clear() {
         itsEmployees.clear();
     }
