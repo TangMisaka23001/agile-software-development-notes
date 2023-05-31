@@ -1,6 +1,7 @@
 package com.agile;
 
 import com.agile.affiliation.UnionAffiliation;
+import com.agile.change.ChangeHourlyTransaction;
 import com.agile.change.ChangeNameTransaction;
 import com.agile.classification.HourlyClassification;
 import com.agile.classification.PaymentClassification;
@@ -14,6 +15,7 @@ import com.agile.method.HoldMethod;
 import com.agile.method.PaymentMethod;
 import com.agile.schedule.MonthlySchedule;
 import com.agile.schedule.PaymentSchedule;
+import com.agile.schedule.WeeklySchedule;
 import com.agile.servicecharge.ServiceCharge;
 import com.agile.timecard.TimeCard;
 import com.agile.transaction.DeleteEmployeeTransaction;
@@ -124,5 +126,25 @@ public class PayrollTest extends TestCase {
         Employee e = GpayrollDatabase.getEmployee(empId);
         assertNotNull(e);
         assertEquals("Bob", e.getName());
+    }
+
+    public void testChangeHourlyTransaction() {
+        int empId = 3;
+        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        t.execute();
+
+        ChangeHourlyTransaction cht = new ChangeHourlyTransaction(empId, 27.52);
+        cht.execute();
+
+        Employee e = GpayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+        PaymentClassification pc = e.getClassification();
+        assertNotNull(pc);
+        HourlyClassification hc = (HourlyClassification) pc;
+        assertNotNull(hc);
+        assertEquals(27.52, hc.getRate());
+        PaymentSchedule ps = e.getSchedule();
+        WeeklySchedule ws = (WeeklySchedule) ps;
+        assertNotNull(ws);
     }
 }

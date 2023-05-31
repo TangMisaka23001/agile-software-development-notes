@@ -5,5 +5,5 @@ package com.agile.schedule;
  *
  * @author tangbin
  */
-public class WeeklySchedule {
+public class WeeklySchedule extends PaymentSchedule {
 }

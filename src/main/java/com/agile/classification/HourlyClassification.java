@@ -13,6 +13,12 @@ import java.util.Map;
  */
 public class HourlyClassification extends PaymentClassification {
 
+    private final double itsHourlyRate;
+
+    public HourlyClassification(double itsHourlyRate) {
+        this.itsHourlyRate = itsHourlyRate;
+    }
+
     private final Map<Date, TimeCard> timeCardMap = new HashMap<>();
 
     public TimeCard getTimeCard(Date date) {
@@ -21,5 +27,9 @@ public class HourlyClassification extends PaymentClassification {
 
     public void addTimeCard(TimeCard timeCard) {
         this.timeCardMap.put(timeCard.getDate(), timeCard);
+    }
+
+    public double getRate() {
+        return itsHourlyRate;
     }
 }
