@@ -70,7 +70,25 @@ public class PayrollTest extends TestCase {
         TimeCard tc = hc.getTimeCard(new Date(2001, 10, 31));
         assertNotNull(tc);
         assertEquals(8.0, tc.getHours());
+    }
 
+    public void testAddServiceCharge() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
 
+        Employee e = GpayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        int memberId = 86;
+        UnionAffiliation af = new UnionAffiliation(memberId, 12.95);
+        e.setAffiliation(af);
+        GpayrollDatabase.addUnionMember(memberId, e);
+        ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, new Date(2001, 11, 01), 12.95);
+        sct.execute();
+
+        ServiceCharge sc = af.getServiceCharge(new Date(2001, 11, 01));
+        assertNotNull(sc);
+        assertEquals(12.95, sc.getAmount());
     }
 }

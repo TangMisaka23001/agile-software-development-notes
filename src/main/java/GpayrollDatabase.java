@@ -9,6 +9,7 @@ import java.util.Map;
 public class GpayrollDatabase {
 
     private static final Map<Integer, Employee> itsEmployees = new HashMap<>();
+    private static final Map<Integer, Employee> itsMembers = new HashMap<>();
 
     public static Employee getEmployee(int empId) {
         return itsEmployees.get(empId);
@@ -24,5 +25,13 @@ public class GpayrollDatabase {
 
     public static void clear() {
         itsEmployees.clear();
+    }
+
+    public static Employee getUnionMember(int itsMemberId) {
+        return itsMembers.get(itsMemberId);
+    }
+
+    public static void addUnionMember(int memberId, Employee e) {
+        itsMembers.put(memberId, e);
     }
 }
