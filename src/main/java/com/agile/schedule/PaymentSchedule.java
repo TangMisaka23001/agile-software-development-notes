@@ -1,9 +1,13 @@
 package com.agile.schedule;
 
+import java.time.LocalDateTime;
+
 /**
  * schedule.PaymentSchedule
  *
  * @author tangbin
  */
-public class PaymentSchedule {
+public interface PaymentSchedule {
+
+    boolean isPayDate(LocalDateTime date);
 }

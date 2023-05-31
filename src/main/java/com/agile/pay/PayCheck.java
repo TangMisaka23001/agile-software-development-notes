@@ -54,6 +54,10 @@ public class PayCheck {
     }
 
     public String getField(String disposition) {
-        return "Hoid";
+        return "Hold";
+    }
+
+    public LocalDateTime getPayPeriodEndDate() {
+        return itsPayDate;
     }
 }

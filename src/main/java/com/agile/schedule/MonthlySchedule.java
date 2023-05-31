@@ -9,7 +9,7 @@ import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
  *
  * @author tangbin
  */
-public class MonthlySchedule extends PaymentSchedule {
+public class MonthlySchedule implements PaymentSchedule {
 
     public static boolean isLastDayOfMonth(LocalDateTime date) {
         int m1 = date.getMonth().get(MONTH_OF_YEAR);
@@ -17,7 +17,8 @@ public class MonthlySchedule extends PaymentSchedule {
         return m1 != m2;
     }
 
-    public static boolean isPayDate(LocalDateTime date) {
+    @Override
+    public boolean isPayDate(LocalDateTime date) {
         return isLastDayOfMonth(date);
     }
 }

@@ -1,9 +1,15 @@
 package com.agile.schedule;
 
+import java.time.LocalDateTime;
+
 /**
  * BlweeklySchedule
  *
  * @author tangbin
  */
-public class BiweeklySchedule {
+public class BiweeklySchedule implements PaymentSchedule {
+    @Override
+    public boolean isPayDate(LocalDateTime date) {
+        return false;
+    }
 }

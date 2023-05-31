@@ -4,7 +4,6 @@ import com.agile.affiliation.Affiliation;
 import com.agile.classification.PaymentClassification;
 import com.agile.method.PaymentMethod;
 import com.agile.pay.PayCheck;
-import com.agile.schedule.MonthlySchedule;
 import com.agile.schedule.PaymentSchedule;
 
 import java.time.LocalDateTime;
@@ -104,6 +103,6 @@ public class Employee {
     }
 
     public boolean isPayDate(LocalDateTime itsPayDate) {
-        return MonthlySchedule.isPayDate(itsPayDate);
+        return itsSchedule.isPayDate(itsPayDate);
     }
 }

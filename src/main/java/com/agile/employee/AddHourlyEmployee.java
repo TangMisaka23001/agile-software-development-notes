@@ -3,6 +3,7 @@ package com.agile.employee;
 import com.agile.classification.HourlyClassification;
 import com.agile.classification.PaymentClassification;
 import com.agile.schedule.PaymentSchedule;
+import com.agile.schedule.WeeklySchedule;
 import com.agile.transaction.AddEmployeeTransaction;
 
 /**
@@ -28,12 +29,17 @@ public class AddHourlyEmployee extends AddEmployeeTransaction {
     }
 
     @Override
+    public void execute() {
+        super.execute();
+    }
+
+    @Override
     public PaymentClassification getClassification() {
         return new HourlyClassification(this.hourlyRate);
     }
 
     @Override
     public PaymentSchedule getSchedule() {
-        return null;
+        return new WeeklySchedule();
     }
 }

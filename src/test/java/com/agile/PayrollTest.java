@@ -185,7 +185,7 @@ public class PayrollTest extends TestCase {
         assertNotNull(pc);
         assertEquals(pc.getPayDate(), payDate);
         assertEquals(1000.00, pc.getGrossPay());
-        assertEquals("Hoid", pc.getField("Disposition"));
+        assertEquals("Hold", pc.getField("Disposition"));
         assertEquals(0.0, pc.getDeductions());
         assertEquals(1000.00, pc.getNetPay());
     }
@@ -199,6 +199,27 @@ public class PayrollTest extends TestCase {
         pt.execute();
         PayCheck pc = pt.getPayCheck(empId);
         assertNull(pc);
+    }
+
+    public void testPaySingleHourlyEmployeeNoTimeCards() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 9, 0, 0);
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+        validatePaycheck(pt, empId, payDate, 0.0);
+    }
+
+    private void validatePaycheck(PaydayTransaction pt, int empId, LocalDateTime payDate, double pay) {
+        PayCheck pc = pt.getPayCheck(empId);
+        assertNotNull(pc);
+        assertEquals(pc.getPayPeriodEndDate(), payDate);
+        assertEquals(pay, pc.getGrossPay());
+        assertEquals("Hold", pc.getField("Disposition"));
+        assertEquals(0.0, pc.getDeductions());
+        assertEquals(pay, pc.getNetPay());
     }
 
 }
