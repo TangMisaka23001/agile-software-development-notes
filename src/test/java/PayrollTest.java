@@ -1,5 +1,7 @@
 import junit.framework.TestCase;
 
+import java.util.Date;
+
 /**
  * TestAddSalariedEmployee
  *
@@ -47,5 +49,28 @@ public class PayrollTest extends TestCase {
             Employee e = GpayrollDatabase.getEmployee(empId);
             assertNull(e);
         }
+    }
+
+    public void testTimeCardTransaction() {
+        int empId = 2;
+
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        TimeCardTransaction tct = new TimeCardTransaction(new Date(2001, 10, 31), 8.0, empId);
+        tct.execute();
+
+        Employee e = GpayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        PaymentClassification pc = e.getClassification();
+        HourlyClassification hc = (HourlyClassification) pc;
+        assertNotNull(hc);
+
+        TimeCard tc = hc.getTimeCard(new Date(2001, 10, 31));
+        assertNotNull(tc);
+        assertEquals(8.0, tc.getHours());
+
+
     }
 }
