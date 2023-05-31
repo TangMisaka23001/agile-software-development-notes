@@ -222,7 +222,7 @@ public class PayrollTest extends TestCase {
         assertEquals(pay, pc.getNetPay());
     }
 
-    public void testPaySingleHourlyEmployeeOneTimeCards() {
+    public void testPaySingleHourlyEmployeeOneTimeCard() {
         int empId = 2;
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
@@ -234,6 +234,20 @@ public class PayrollTest extends TestCase {
         PaydayTransaction pt = new PaydayTransaction(payDate);
         pt.execute();
         validatePaycheck(pt, empId, payDate, 30.5);
+    }
+
+    public void testPaySingleHourlyEmployeeOvertimeOneTimeCard() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 9, 0, 0);
+
+        TimeCardTransaction tc = new TimeCardTransaction(payDate, 9.0, empId);
+        tc.execute();
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+        validatePaycheck(pt, empId, payDate, (8 + 1.5) * 15.25);
     }
 
 }

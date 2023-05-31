@@ -36,6 +36,10 @@ public class HourlyClassification extends PaymentClassification {
 
     @Override
     public double calculatePay(PayCheck pc) {
-        return this.timeCardMap.values().stream().mapToDouble(card -> this.itsHourlyRate * card.getHours()).sum();
+        return this.timeCardMap.values().stream().mapToDouble(card -> {
+            double cardHours = card.getHours();
+            double hours = cardHours <= 8 ? cardHours : (8 + (cardHours - 8) * 1.5);
+            return this.itsHourlyRate * hours;
+        }).sum();
     }
 }
