@@ -1,5 +1,12 @@
+package com.agile.employee;
+
+import com.agile.classification.HourlyClassification;
+import com.agile.classification.PaymentClassification;
+import com.agile.schedule.PaymentSchedule;
+import com.agile.transaction.AddEmployeeTransaction;
+
 /**
- * AddHourlyEmployee
+ * employee.AddHourlyEmployee
  *
  * @author tangbin
  */
@@ -21,12 +28,12 @@ public class AddHourlyEmployee extends AddEmployeeTransaction {
     }
 
     @Override
-    PaymentClassification getClassification() {
+    public PaymentClassification getClassification() {
         return new HourlyClassification();
     }
 
     @Override
-    PaymentSchedule getSchedule() {
+    public PaymentSchedule getSchedule() {
         return null;
     }
 }

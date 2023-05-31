@@ -1,8 +1,17 @@
+package com.agile.transaction;
+
+import com.agile.affiliation.Affiliation;
+import com.agile.affiliation.UnionAffiliation;
+import com.agile.classification.PaymentClassification;
+import com.agile.database.GpayrollDatabase;
+import com.agile.employee.Employee;
+import com.agile.schedule.PaymentSchedule;
+
 import java.util.Date;
 import java.util.Objects;
 
 /**
- * ServiceChargeTransaction
+ * transaction.ServiceChargeTransaction
  *
  * @author tangbin
  */
@@ -19,7 +28,7 @@ public class ServiceChargeTransaction extends Transaction {
     }
 
     @Override
-    void execute() {
+    public void execute() {
         Employee e = GpayrollDatabase.getUnionMember(itsMemberId);
         Affiliation af = e.getAffiliation();
         UnionAffiliation uaf = (UnionAffiliation) af;
@@ -29,12 +38,12 @@ public class ServiceChargeTransaction extends Transaction {
     }
 
     @Override
-    PaymentClassification getClassification() {
+    public PaymentClassification getClassification() {
         return null;
     }
 
     @Override
-    PaymentSchedule getSchedule() {
+    public PaymentSchedule getSchedule() {
         return null;
     }
 }

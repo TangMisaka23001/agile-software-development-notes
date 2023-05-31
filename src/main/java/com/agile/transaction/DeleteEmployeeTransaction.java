@@ -1,5 +1,11 @@
+package com.agile.transaction;
+
+import com.agile.classification.PaymentClassification;
+import com.agile.database.GpayrollDatabase;
+import com.agile.schedule.PaymentSchedule;
+
 /**
- * DeleteEmployeeTransaction
+ * transaction.DeleteEmployeeTransaction
  *
  * @author tangbin
  */
@@ -12,17 +18,17 @@ public class DeleteEmployeeTransaction extends Transaction {
     }
 
     @Override
-    void execute() {
+    public void execute() {
         GpayrollDatabase.deleteEmployee(itsEmpId);
     }
 
     @Override
-    PaymentClassification getClassification() {
+    public PaymentClassification getClassification() {
         return null;
     }
 
     @Override
-    PaymentSchedule getSchedule() {
+    public PaymentSchedule getSchedule() {
         return null;
     }
 }

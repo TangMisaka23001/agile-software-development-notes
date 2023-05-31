@@ -1,3 +1,23 @@
+package com.agile;
+
+import com.agile.affiliation.UnionAffiliation;
+import com.agile.classification.HourlyClassification;
+import com.agile.classification.PaymentClassification;
+import com.agile.classification.SalariedClassification;
+import com.agile.database.GpayrollDatabase;
+import com.agile.employee.AddCommissionedEmployee;
+import com.agile.employee.AddHourlyEmployee;
+import com.agile.employee.AddSalariedEmployee;
+import com.agile.employee.Employee;
+import com.agile.method.HoldMethod;
+import com.agile.method.PaymentMethod;
+import com.agile.schedule.MonthlySchedule;
+import com.agile.schedule.PaymentSchedule;
+import com.agile.servicecharge.ServiceCharge;
+import com.agile.timecard.TimeCard;
+import com.agile.transaction.DeleteEmployeeTransaction;
+import com.agile.transaction.ServiceChargeTransaction;
+import com.agile.transaction.TimeCardTransaction;
 import junit.framework.TestCase;
 
 import java.util.Date;

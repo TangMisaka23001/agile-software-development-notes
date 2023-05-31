@@ -1,5 +1,7 @@
+package com.agile.method;
+
 /**
- * PaymentMethod
+ * method.PaymentMethod
  *
  * @author tangbin
  */

@@ -1,7 +1,9 @@
+package com.agile.servicecharge;
+
 import java.util.Date;
 
 /**
- * ServiceCharge
+ * servicecharge.ServiceCharge
  *
  * @author tangbin
  */

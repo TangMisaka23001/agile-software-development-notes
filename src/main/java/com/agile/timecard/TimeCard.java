@@ -1,7 +1,9 @@
+package com.agile.timecard;
+
 import java.util.Date;
 
 /**
- * TimeCard
+ * timecard.TimeCard
  *
  * @author tangbin
  */

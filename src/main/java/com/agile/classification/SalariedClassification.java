@@ -1,5 +1,7 @@
+package com.agile.classification;
+
 /**
- * SalariedClassification
+ * classification.SalariedClassification
  *
  * @author tangbin
  */

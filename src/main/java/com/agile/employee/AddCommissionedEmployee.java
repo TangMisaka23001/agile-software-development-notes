@@ -1,5 +1,9 @@
+package com.agile.employee;
+
+import com.agile.transaction.AddEmployeeTransaction;
+
 /**
- * AddCommissionedEmployee
+ * employee.AddCommissionedEmployee
  *
  * @author tangbin
  */

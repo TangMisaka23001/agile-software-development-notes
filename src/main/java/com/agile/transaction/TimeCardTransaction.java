@@ -1,8 +1,17 @@
+package com.agile.transaction;
+
+import com.agile.classification.HourlyClassification;
+import com.agile.classification.PaymentClassification;
+import com.agile.database.GpayrollDatabase;
+import com.agile.employee.Employee;
+import com.agile.schedule.PaymentSchedule;
+import com.agile.timecard.TimeCard;
+
 import java.util.Date;
 import java.util.Objects;
 
 /**
- * TimeCardTransaction
+ * transaction.TimeCardTransaction
  *
  * @author tangbin
  */
@@ -19,7 +28,7 @@ public class TimeCardTransaction extends Transaction {
     }
 
     @Override
-    void execute() {
+    public void execute() {
         Employee e = GpayrollDatabase.getEmployee(itsEmpId);
         if (Objects.nonNull(e)) {
             PaymentClassification pc = e.getClassification();
@@ -35,12 +44,12 @@ public class TimeCardTransaction extends Transaction {
     }
 
     @Override
-    PaymentClassification getClassification() {
+    public PaymentClassification getClassification() {
         return null;
     }
 
     @Override
-    PaymentSchedule getSchedule() {
+    public PaymentSchedule getSchedule() {
         return null;
     }
 }

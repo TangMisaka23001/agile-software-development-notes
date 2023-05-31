@@ -1,5 +1,12 @@
+package com.agile.employee;
+
+import com.agile.affiliation.Affiliation;
+import com.agile.classification.PaymentClassification;
+import com.agile.method.PaymentMethod;
+import com.agile.schedule.PaymentSchedule;
+
 /**
- * Employee
+ * employee.Employee
  *
  * @author tangbin
  */

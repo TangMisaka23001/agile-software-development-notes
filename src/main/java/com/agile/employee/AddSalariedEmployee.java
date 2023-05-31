@@ -1,3 +1,11 @@
+package com.agile.employee;
+
+import com.agile.classification.PaymentClassification;
+import com.agile.classification.SalariedClassification;
+import com.agile.schedule.MonthlySchedule;
+import com.agile.schedule.PaymentSchedule;
+import com.agile.transaction.AddEmployeeTransaction;
+
 /**
  * AddSalarledEmployee
  *
@@ -21,12 +29,12 @@ public class AddSalariedEmployee extends AddEmployeeTransaction {
     }
 
     @Override
-    PaymentClassification getClassification() {
+    public PaymentClassification getClassification() {
         return new SalariedClassification(itsSalary);
     }
 
     @Override
-    PaymentSchedule getSchedule() {
+    public PaymentSchedule getSchedule() {
         return new MonthlySchedule();
     }
 }

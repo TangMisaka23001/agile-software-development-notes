@@ -1,3 +1,5 @@
+package com.agile.schedule;
+
 /**
  * BlweeklySchedule
  *

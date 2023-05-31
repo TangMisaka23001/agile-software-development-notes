@@ -1,7 +1,11 @@
+package com.agile.affiliation;
+
+import com.agile.servicecharge.ServiceCharge;
+
 import java.util.Date;
 
 /**
- * UnionAffiliation
+ * affiliation.UnionAffiliation
  *
  * @author tangbin
  */
@@ -21,7 +25,7 @@ public class UnionAffiliation extends Affiliation {
     }
 
     @Override
-    ServiceCharge getServiceCharge(Date date) {
+    public ServiceCharge getServiceCharge(Date date) {
         return serviceCharge;
     }
 }

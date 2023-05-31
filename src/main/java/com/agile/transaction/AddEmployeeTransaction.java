@@ -1,5 +1,14 @@
+package com.agile.transaction;
+
+import com.agile.classification.PaymentClassification;
+import com.agile.database.GpayrollDatabase;
+import com.agile.employee.Employee;
+import com.agile.method.HoldMethod;
+import com.agile.method.PaymentMethod;
+import com.agile.schedule.PaymentSchedule;
+
 /**
- * AddEmployeeTransaction
+ * transaction.AddEmployeeTransaction
  *
  * @author tangbin
  */
@@ -52,12 +61,12 @@ public class AddEmployeeTransaction extends Transaction {
     }
 
     @Override
-    PaymentClassification getClassification() {
+    public PaymentClassification getClassification() {
         return null;
     }
 
     @Override
-    PaymentSchedule getSchedule() {
+    public PaymentSchedule getSchedule() {
         return null;
     }
 }

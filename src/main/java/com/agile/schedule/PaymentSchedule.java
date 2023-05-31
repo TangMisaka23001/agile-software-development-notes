@@ -1,5 +1,7 @@
+package com.agile.schedule;
+
 /**
- * PaymentSchedule
+ * schedule.PaymentSchedule
  *
  * @author tangbin
  */
