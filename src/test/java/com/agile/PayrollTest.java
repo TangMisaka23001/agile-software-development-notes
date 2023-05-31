@@ -1,6 +1,7 @@
 package com.agile;
 
 import com.agile.affiliation.UnionAffiliation;
+import com.agile.change.ChangeNameTransaction;
 import com.agile.classification.HourlyClassification;
 import com.agile.classification.PaymentClassification;
 import com.agile.classification.SalariedClassification;
@@ -110,5 +111,18 @@ public class PayrollTest extends TestCase {
         ServiceCharge sc = af.getServiceCharge(new Date(2001, 11, 01));
         assertNotNull(sc);
         assertEquals(12.95, sc.getAmount());
+    }
+
+    public void testChangeNameTransaction() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        ChangeNameTransaction cnt = new ChangeNameTransaction(empId, "Bob");
+        cnt.execute();
+
+        Employee e = GpayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+        assertEquals("Bob", e.getName());
     }
 }
