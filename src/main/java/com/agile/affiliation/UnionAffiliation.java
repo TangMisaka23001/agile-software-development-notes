@@ -12,20 +12,28 @@ import java.util.Date;
 public class UnionAffiliation extends Affiliation {
 
     private ServiceCharge serviceCharge;
-    private int memberId;
-    private double charge;
+    private final int memberId;
+    private final double dues;
 
     public void addServiceCharge(Date date, double charge) {
         this.serviceCharge = new ServiceCharge(date, charge);
     }
 
-    public UnionAffiliation(int memberId, double charge) {
+    public UnionAffiliation(int memberId, double dues) {
         this.memberId = memberId;
-        this.charge = charge;
+        this.dues = dues;
     }
 
     @Override
     public ServiceCharge getServiceCharge(Date date) {
         return serviceCharge;
+    }
+
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public double getDues() {
+        return dues;
     }
 }

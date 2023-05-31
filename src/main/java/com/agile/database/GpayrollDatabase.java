@@ -38,4 +38,8 @@ public class GpayrollDatabase {
     public static void addUnionMember(int memberId, Employee e) {
         itsMembers.put(memberId, e);
     }
+
+    public static void removeUnionMember(int memberId) {
+        itsMembers.remove(memberId);
+    }
 }
