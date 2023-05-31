@@ -284,4 +284,24 @@ public class PayrollTest extends TestCase {
         validatePaycheck(pt, empId, payDate, 7 * 15.25);
     }
 
+    public void testPaySingleHourlyEmployeeWithTimeCardsSpanningTwoPayPeriods() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 9, 0, 0);
+        LocalDateTime dateInPreviousPayPeriod = LocalDateTime.of(2001, 11, 2, 0, 0);
+
+        TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empId);
+        tc.execute();
+
+        TimeCardTransaction tc2 = new TimeCardTransaction(dateInPreviousPayPeriod, 5.0, empId);
+        tc2.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePaycheck(pt, empId, payDate, 2 * 15.25);
+    }
+
 }
