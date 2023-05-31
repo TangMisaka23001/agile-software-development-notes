@@ -85,7 +85,7 @@ public class PayrollTest extends TestCase {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        TimeCardTransaction tct = new TimeCardTransaction(new Date(2001, 10, 31), 8.0, empId);
+        TimeCardTransaction tct = new TimeCardTransaction(LocalDateTime.of(2001, 10, 31, 0, 0), 8.0, empId);
         tct.execute();
 
         Employee e = GpayrollDatabase.getEmployee(empId);
@@ -95,7 +95,7 @@ public class PayrollTest extends TestCase {
         HourlyClassification hc = (HourlyClassification) pc;
         assertNotNull(hc);
 
-        TimeCard tc = hc.getTimeCard(new Date(2001, 10, 31));
+        TimeCard tc = hc.getTimeCard(LocalDateTime.of(2001, 10, 31, 0, 0));
         assertNotNull(tc);
         assertEquals(8.0, tc.getHours());
     }
@@ -220,6 +220,20 @@ public class PayrollTest extends TestCase {
         assertEquals("Hold", pc.getField("Disposition"));
         assertEquals(0.0, pc.getDeductions());
         assertEquals(pay, pc.getNetPay());
+    }
+
+    public void testPaySingleHourlyEmployeeOneTimeCards() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 9, 0, 0);
+
+        TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empId);
+        tc.execute();
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+        validatePaycheck(pt, empId, payDate, 30.5);
     }
 
 }

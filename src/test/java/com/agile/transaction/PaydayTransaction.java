@@ -1,10 +1,8 @@
 package com.agile.transaction;
 
-import com.agile.classification.PaymentClassification;
 import com.agile.database.GpayrollDatabase;
 import com.agile.employee.Employee;
 import com.agile.pay.PayCheck;
-import com.agile.schedule.PaymentSchedule;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -39,16 +37,6 @@ public class PaydayTransaction extends Transaction {
                 }
             }
         }
-    }
-
-    @Override
-    public PaymentClassification getClassification() {
-        return null;
-    }
-
-    @Override
-    public PaymentSchedule getSchedule() {
-        return null;
     }
 
     public PayCheck getPayCheck(int empId) {

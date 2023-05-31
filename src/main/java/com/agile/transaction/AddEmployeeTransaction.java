@@ -12,7 +12,7 @@ import com.agile.schedule.PaymentSchedule;
  *
  * @author tangbin
  */
-public class AddEmployeeTransaction extends Transaction {
+public abstract class AddEmployeeTransaction extends Transaction {
 
     private Integer itsEmpId;
     private String itsName;
@@ -60,13 +60,7 @@ public class AddEmployeeTransaction extends Transaction {
         GpayrollDatabase.addEmployee(itsEmpId, e);
     }
 
-    @Override
-    public PaymentClassification getClassification() {
-        throw new RuntimeException("must be Override");
-    }
+    public abstract PaymentClassification getClassification();
 
-    @Override
-    public PaymentSchedule getSchedule() {
-        throw new RuntimeException("must be Override");
-    }
+    public abstract PaymentSchedule getSchedule();
 }

@@ -4,10 +4,9 @@ import com.agile.classification.HourlyClassification;
 import com.agile.classification.PaymentClassification;
 import com.agile.database.GpayrollDatabase;
 import com.agile.employee.Employee;
-import com.agile.schedule.PaymentSchedule;
 import com.agile.timecard.TimeCard;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -17,11 +16,11 @@ import java.util.Objects;
  */
 public class TimeCardTransaction extends Transaction {
 
-    private Date itsDate;
-    private Double itsHours;
-    private Integer itsEmpId;
+    private final LocalDateTime itsDate;
+    private final Double itsHours;
+    private final Integer itsEmpId;
 
-    public TimeCardTransaction(Date itsDate, Double itsHours, Integer itsEmpId) {
+    public TimeCardTransaction(LocalDateTime itsDate, Double itsHours, Integer itsEmpId) {
         this.itsDate = itsDate;
         this.itsHours = itsHours;
         this.itsEmpId = itsEmpId;
@@ -41,15 +40,5 @@ public class TimeCardTransaction extends Transaction {
         } else {
             throw new RuntimeException("No such employee.");
         }
-    }
-
-    @Override
-    public PaymentClassification getClassification() {
-        return null;
-    }
-
-    @Override
-    public PaymentSchedule getSchedule() {
-        return null;
     }
 }

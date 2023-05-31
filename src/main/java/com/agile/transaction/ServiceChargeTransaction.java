@@ -2,10 +2,8 @@ package com.agile.transaction;
 
 import com.agile.affiliation.Affiliation;
 import com.agile.affiliation.UnionAffiliation;
-import com.agile.classification.PaymentClassification;
 import com.agile.database.GpayrollDatabase;
 import com.agile.employee.Employee;
-import com.agile.schedule.PaymentSchedule;
 
 import java.util.Date;
 import java.util.Objects;
@@ -17,9 +15,9 @@ import java.util.Objects;
  */
 public class ServiceChargeTransaction extends Transaction {
 
-    private int itsMemberId;
-    private Date itsDate;
-    private double itsCharge;
+    private final int itsMemberId;
+    private final Date itsDate;
+    private final double itsCharge;
 
     public ServiceChargeTransaction(int itsMemberId, Date itsDate, double itsCharge) {
         this.itsMemberId = itsMemberId;
@@ -35,15 +33,5 @@ public class ServiceChargeTransaction extends Transaction {
         if (Objects.nonNull(uaf)) {
             uaf.addServiceCharge(itsDate, itsCharge);
         }
-    }
-
-    @Override
-    public PaymentClassification getClassification() {
-        return null;
-    }
-
-    @Override
-    public PaymentSchedule getSchedule() {
-        return null;
     }
 }

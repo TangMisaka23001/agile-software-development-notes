@@ -1,6 +1,6 @@
 package com.agile.timecard;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * timecard.TimeCard
@@ -9,19 +9,19 @@ import java.util.Date;
  */
 public class TimeCard {
 
-    private Date itsDate;
-    private Double itsHours;
+    private final LocalDateTime itsDate;
+    private final Double itsHours;
 
     public double getHours() {
         return this.itsHours;
     }
 
-    public Date getDate() {
-        return itsDate;
-    }
-
-    public TimeCard(Date itsDate, Double itsHours) {
+    public TimeCard(LocalDateTime itsDate, Double itsHours) {
         this.itsDate = itsDate;
         this.itsHours = itsHours;
+    }
+
+    public LocalDateTime getDate() {
+        return itsDate;
     }
 }

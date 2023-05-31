@@ -3,7 +3,7 @@ package com.agile.classification;
 import com.agile.pay.PayCheck;
 import com.agile.timecard.TimeCard;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,9 +20,9 @@ public class HourlyClassification extends PaymentClassification {
         this.itsHourlyRate = itsHourlyRate;
     }
 
-    private final Map<Date, TimeCard> timeCardMap = new HashMap<>();
+    private final Map<LocalDateTime, TimeCard> timeCardMap = new HashMap<>();
 
-    public TimeCard getTimeCard(Date date) {
+    public TimeCard getTimeCard(LocalDateTime date) {
         return timeCardMap.get(date);
     }
 
@@ -36,6 +36,6 @@ public class HourlyClassification extends PaymentClassification {
 
     @Override
     public double calculatePay(PayCheck pc) {
-        return 0;
+        return this.timeCardMap.values().stream().mapToDouble(card -> this.itsHourlyRate * card.getHours()).sum();
     }
 }

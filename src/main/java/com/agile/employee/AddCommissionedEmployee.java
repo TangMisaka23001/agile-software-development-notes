@@ -1,5 +1,7 @@
 package com.agile.employee;
 
+import com.agile.classification.PaymentClassification;
+import com.agile.schedule.PaymentSchedule;
 import com.agile.transaction.AddEmployeeTransaction;
 
 /**
@@ -32,5 +34,15 @@ public class AddCommissionedEmployee extends AddEmployeeTransaction {
 
     public void setCommissionRate(Double commissionRate) {
         this.commissionRate = commissionRate;
+    }
+
+    @Override
+    public PaymentClassification getClassification() {
+        return null;
+    }
+
+    @Override
+    public PaymentSchedule getSchedule() {
+        return null;
     }
 }
