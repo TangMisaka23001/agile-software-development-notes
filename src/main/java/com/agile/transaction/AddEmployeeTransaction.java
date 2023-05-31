@@ -62,11 +62,11 @@ public class AddEmployeeTransaction extends Transaction {
 
     @Override
     public PaymentClassification getClassification() {
-        return null;
+        throw new RuntimeException("must be Override");
     }
 
     @Override
     public PaymentSchedule getSchedule() {
-        return null;
+        throw new RuntimeException("must be Override");
     }
 }

@@ -2,7 +2,9 @@ package com.agile.database;
 
 import com.agile.employee.Employee;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,5 +43,9 @@ public class GpayrollDatabase {
 
     public static void removeUnionMember(int memberId) {
         itsMembers.remove(memberId);
+    }
+
+    public static List<Integer> getAllEmployeeIds() {
+        return new ArrayList<>(itsEmployees.keySet());
     }
 }

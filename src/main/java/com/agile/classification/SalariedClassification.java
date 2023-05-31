@@ -1,5 +1,7 @@
 package com.agile.classification;
 
+import com.agile.pay.PayCheck;
+
 /**
  * classification.SalariedClassification
  *
@@ -19,5 +21,10 @@ public class SalariedClassification extends PaymentClassification {
 
     public void setSalary(Double itsSalary) {
         this.itsSalary = itsSalary;
+    }
+
+    @Override
+    public double calculatePay(PayCheck pc) {
+        return itsSalary;
     }
 }

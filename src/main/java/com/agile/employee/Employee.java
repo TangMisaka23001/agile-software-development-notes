@@ -3,7 +3,12 @@ package com.agile.employee;
 import com.agile.affiliation.Affiliation;
 import com.agile.classification.PaymentClassification;
 import com.agile.method.PaymentMethod;
+import com.agile.pay.PayCheck;
+import com.agile.schedule.MonthlySchedule;
 import com.agile.schedule.PaymentSchedule;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * employee.Employee
@@ -15,10 +20,10 @@ public class Employee {
     private Integer empId;
     private String itsName;
     private String itsAddress;
-    private PaymentClassification paymentClassification;
-    private PaymentSchedule paymentSchedule;
-    private PaymentMethod paymentMethod;
-    private Affiliation affiliation;
+    private PaymentClassification itsClassification;
+    private PaymentSchedule itsSchedule;
+    private PaymentMethod itsPayMethod;
+    private Affiliation itsAffiliation;
 
 
     public Employee(Integer empId, String itsName, String itsAddress) {
@@ -52,34 +57,53 @@ public class Employee {
     }
 
     public PaymentClassification getClassification() {
-        return paymentClassification;
+        return itsClassification;
     }
 
     public void setClassification(PaymentClassification paymentClassification) {
-        this.paymentClassification = paymentClassification;
+        this.itsClassification = paymentClassification;
     }
 
     public PaymentSchedule getSchedule() {
-        return paymentSchedule;
+        return itsSchedule;
     }
 
     public void setSchedule(PaymentSchedule paymentSchedule) {
-        this.paymentSchedule = paymentSchedule;
+        this.itsSchedule = paymentSchedule;
     }
 
     public PaymentMethod getMethod() {
-        return paymentMethod;
+        return itsPayMethod;
     }
 
     public void setMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
+        this.itsPayMethod = paymentMethod;
     }
 
-    public Affiliation getAffiliation() {
-        return affiliation;
+    public Affiliation getItsAffiliation() {
+        return itsAffiliation;
     }
 
-    public void setAffiliation(Affiliation affiliation) {
-        this.affiliation = affiliation;
+    public void setItsAffiliation(Affiliation itsAffiliation) {
+        this.itsAffiliation = itsAffiliation;
+    }
+
+    public void payday(PayCheck pc) {
+        double grossPay = itsClassification.calculatePay(pc);
+        if (Objects.nonNull(itsAffiliation)) {
+            double deductions = itsAffiliation.calculateDeductions(pc);
+            double netPay = grossPay - deductions;
+            pc.setDeductions(deductions);
+            pc.setNetPay(netPay);
+        } else {
+            pc.setDeductions(0);
+            pc.setNetPay(grossPay);
+        }
+        pc.setGrossPay(grossPay);
+        itsPayMethod.pay(pc);
+    }
+
+    public boolean isPayDate(LocalDateTime itsPayDate) {
+        return MonthlySchedule.isPayDate(itsPayDate);
     }
 }

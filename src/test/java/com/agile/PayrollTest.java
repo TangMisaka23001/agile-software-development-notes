@@ -15,16 +15,19 @@ import com.agile.employee.AddSalariedEmployee;
 import com.agile.employee.Employee;
 import com.agile.method.HoldMethod;
 import com.agile.method.PaymentMethod;
+import com.agile.pay.PayCheck;
 import com.agile.schedule.MonthlySchedule;
 import com.agile.schedule.PaymentSchedule;
 import com.agile.schedule.WeeklySchedule;
 import com.agile.servicecharge.ServiceCharge;
 import com.agile.timecard.TimeCard;
 import com.agile.transaction.DeleteEmployeeTransaction;
+import com.agile.transaction.PaydayTransaction;
 import com.agile.transaction.ServiceChargeTransaction;
 import com.agile.transaction.TimeCardTransaction;
 import junit.framework.TestCase;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -107,7 +110,7 @@ public class PayrollTest extends TestCase {
 
         int memberId = 86;
         UnionAffiliation af = new UnionAffiliation(memberId, 12.95);
-        e.setAffiliation(af);
+        e.setItsAffiliation(af);
         GpayrollDatabase.addUnionMember(memberId, e);
         ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, new Date(2001, 11, 01), 12.95);
         sct.execute();
@@ -161,7 +164,7 @@ public class PayrollTest extends TestCase {
         Employee e = GpayrollDatabase.getEmployee(empId);
         assertNotNull(e);
 
-        Affiliation af = e.getAffiliation();
+        Affiliation af = e.getItsAffiliation();
         assertNotNull(af);
         UnionAffiliation uf = (UnionAffiliation) af;
         assertNotNull(uf);
@@ -170,4 +173,32 @@ public class PayrollTest extends TestCase {
         assertNotNull(member);
         assertEquals(e, member);
     }
+
+    public void testPaySingleSalariedEmployee() {
+        int empId = 1;
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.00);
+        t.execute();
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 30, 0, 0);
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+        PayCheck pc = pt.getPayCheck(empId);
+        assertNotNull(pc);
+        assertEquals(pc.getPayDate(), payDate);
+        assertEquals(1000.00, pc.getGrossPay());
+        assertEquals("Hoid", pc.getField("Disposition"));
+        assertEquals(0.0, pc.getDeductions());
+        assertEquals(1000.00, pc.getNetPay());
+    }
+
+    public void testPaySingleSalariedEmployeeOnWrongDate() {
+        int empId = 1;
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.00);
+        t.execute();
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 29, 0, 0);
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+        PayCheck pc = pt.getPayCheck(empId);
+        assertNull(pc);
+    }
+
 }

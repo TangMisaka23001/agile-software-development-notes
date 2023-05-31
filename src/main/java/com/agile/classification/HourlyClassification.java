@@ -1,5 +1,6 @@
 package com.agile.classification;
 
+import com.agile.pay.PayCheck;
 import com.agile.timecard.TimeCard;
 
 import java.util.Date;
@@ -31,5 +32,10 @@ public class HourlyClassification extends PaymentClassification {
 
     public double getRate() {
         return itsHourlyRate;
+    }
+
+    @Override
+    public double calculatePay(PayCheck pc) {
+        return 0;
     }
 }

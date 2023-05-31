@@ -1,5 +1,6 @@
 package com.agile.affiliation;
 
+import com.agile.pay.PayCheck;
 import com.agile.servicecharge.ServiceCharge;
 
 import java.util.Date;
@@ -11,4 +12,8 @@ import java.util.Date;
  */
 public abstract class Affiliation {
     public abstract ServiceCharge getServiceCharge(Date date);
+
+    public double calculateDeductions(PayCheck pc) {
+        return 0;
+    }
 }
