@@ -266,4 +266,22 @@ public class PayrollTest extends TestCase {
         assertNull(pc);
     }
 
+    public void testPaySingleHourlyEmployeeOvertimeTwoTimeCards() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 9, 0, 0);
+
+        TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empId);
+        tc.execute();
+        TimeCardTransaction tc2 = new TimeCardTransaction(LocalDateTime.of(2001, 11, 8, 0, 0), 5.0, empId);
+        tc2.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePaycheck(pt, empId, payDate, 7 * 15.25);
+    }
+
 }
