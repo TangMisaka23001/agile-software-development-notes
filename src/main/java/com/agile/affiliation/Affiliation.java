@@ -3,7 +3,7 @@ package com.agile.affiliation;
 import com.agile.pay.PayCheck;
 import com.agile.servicecharge.ServiceCharge;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * affiliation.Affiliation
@@ -11,9 +11,7 @@ import java.util.Date;
  * @author tangbin
  */
 public abstract class Affiliation {
-    public abstract ServiceCharge getServiceCharge(Date date);
+    public abstract ServiceCharge getServiceCharge(LocalDateTime date);
 
-    public double calculateDeductions(PayCheck pc) {
-        return 0;
-    }
+    public abstract double calculateDeductions(PayCheck pc);
 }

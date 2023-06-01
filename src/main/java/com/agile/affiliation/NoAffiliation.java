@@ -1,8 +1,9 @@
 package com.agile.affiliation;
 
+import com.agile.pay.PayCheck;
 import com.agile.servicecharge.ServiceCharge;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * NoAffiliation
@@ -11,7 +12,12 @@ import java.util.Date;
  */
 public class NoAffiliation extends Affiliation {
     @Override
-    public ServiceCharge getServiceCharge(Date date) {
+    public ServiceCharge getServiceCharge(LocalDateTime date) {
         return null;
+    }
+
+    @Override
+    public double calculateDeductions(PayCheck pc) {
+        return 0;
     }
 }

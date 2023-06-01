@@ -1,6 +1,6 @@
 package com.agile.servicecharge;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * servicecharge.ServiceCharge
@@ -9,10 +9,10 @@ import java.util.Date;
  */
 public class ServiceCharge {
 
-    private Date date;
-    private double charge;
+    private final LocalDateTime date;
+    private final double charge;
 
-    public ServiceCharge(Date date, double charge) {
+    public ServiceCharge(LocalDateTime date, double charge) {
         this.date = date;
         this.charge = charge;
     }

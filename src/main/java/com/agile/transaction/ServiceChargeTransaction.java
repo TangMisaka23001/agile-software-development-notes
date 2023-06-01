@@ -5,7 +5,7 @@ import com.agile.affiliation.UnionAffiliation;
 import com.agile.database.GpayrollDatabase;
 import com.agile.employee.Employee;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -16,10 +16,10 @@ import java.util.Objects;
 public class ServiceChargeTransaction extends Transaction {
 
     private final int itsMemberId;
-    private final Date itsDate;
+    private final LocalDateTime itsDate;
     private final double itsCharge;
 
-    public ServiceChargeTransaction(int itsMemberId, Date itsDate, double itsCharge) {
+    public ServiceChargeTransaction(int itsMemberId, LocalDateTime itsDate, double itsCharge) {
         this.itsMemberId = itsMemberId;
         this.itsDate = itsDate;
         this.itsCharge = itsCharge;

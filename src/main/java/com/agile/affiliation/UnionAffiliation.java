@@ -6,7 +6,7 @@ import com.agile.servicecharge.ServiceCharge;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Date;
+import java.util.Objects;
 
 /**
  * affiliation.UnionAffiliation
@@ -19,7 +19,7 @@ public class UnionAffiliation extends Affiliation {
     private final int memberId;
     private final double itsDues;
 
-    public void addServiceCharge(Date date, double charge) {
+    public void addServiceCharge(LocalDateTime date, double charge) {
         this.serviceCharge = new ServiceCharge(date, charge);
     }
 
@@ -29,7 +29,7 @@ public class UnionAffiliation extends Affiliation {
     }
 
     @Override
-    public ServiceCharge getServiceCharge(Date date) {
+    public ServiceCharge getServiceCharge(LocalDateTime date) {
         return serviceCharge;
     }
 
@@ -42,7 +42,7 @@ public class UnionAffiliation extends Affiliation {
     }
 
     private int numberOfFridaysInPayPeriod(LocalDateTime payPeriodStart, LocalDateTime payPeriodEnd) {
-        int count = 0;
+        int count = payPeriodEnd.getDayOfWeek() == DayOfWeek.FRIDAY ? 1 : 0;
         LocalDateTime current = payPeriodStart;
         while (current.isBefore(payPeriodEnd)) {
             LocalDateTime nextFriday = current.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
@@ -57,6 +57,6 @@ public class UnionAffiliation extends Affiliation {
     @Override
     public double calculateDeductions(PayCheck pc) {
         int fridays = numberOfFridaysInPayPeriod(pc.getPayPeriodStartDate(), pc.getPayPeriodEndDate());
-        return itsDues * fridays;
+        return itsDues * fridays + (Objects.nonNull(serviceCharge) ? serviceCharge.getAmount() : 0);
     }
 }

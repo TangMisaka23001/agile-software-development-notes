@@ -28,7 +28,6 @@ import com.agile.transaction.TimeCardTransaction;
 import junit.framework.TestCase;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * TestAddSalariedEmployee
@@ -112,10 +111,10 @@ public class PayrollTest extends TestCase {
         UnionAffiliation af = new UnionAffiliation(memberId, 12.95);
         e.setItsAffiliation(af);
         GpayrollDatabase.addUnionMember(memberId, e);
-        ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, new Date(2001, 11, 01), 12.95);
+        ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, LocalDateTime.of(2001, 11, 01, 0, 0), 12.95);
         sct.execute();
 
-        ServiceCharge sc = af.getServiceCharge(new Date(2001, 11, 01));
+        ServiceCharge sc = af.getServiceCharge(LocalDateTime.of(2001, 11, 01, 0, 0));
         assertNotNull(sc);
         assertEquals(12.95, sc.getAmount());
     }
@@ -318,7 +317,36 @@ public class PayrollTest extends TestCase {
         PaydayTransaction pt = new PaydayTransaction(payDate);
         pt.execute();
 
-        validatePaycheck(pt, empId, payDate, 1000.00 - 37.68);
+        validatePaycheck(pt, empId, payDate, 1000.00 - 5 * 9.42);
+    }
+
+    public void testHourlyUnionMemberServiceCharge() {
+        int empId = 1;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.24);
+        t.execute();
+
+        int memberId = 7734;
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
+        cmt.execute();
+
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 9, 0, 0);
+        ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, payDate, 19.42);
+        sct.execute();
+
+        TimeCardTransaction tct = new TimeCardTransaction(payDate, 8.0, empId);
+        tct.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        PayCheck pc = pt.getPayCheck(empId);
+
+        assertNotNull(pc);
+        assertEquals(pc.getPayPeriodEndDate(), payDate);
+        assertEquals(8 * 15.24, pc.getGrossPay());
+        assertEquals("Hold", pc.getField("Disposition"));
+        assertEquals(9.42 + 19.42, pc.getDeductions());
+        assertEquals((8 * 15.24) - (9.42 + 19.42), pc.getNetPay());
     }
 
 
