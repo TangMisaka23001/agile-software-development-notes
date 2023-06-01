@@ -105,4 +105,8 @@ public class Employee {
     public boolean isPayDate(LocalDateTime itsPayDate) {
         return itsSchedule.isPayDate(itsPayDate);
     }
+
+    public LocalDateTime getPayPeriodStartDate(LocalDateTime itsPayDate) {
+        return itsSchedule.getPayPeriodStartDate(itsPayDate);
+    }
 }

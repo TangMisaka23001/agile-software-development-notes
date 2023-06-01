@@ -10,4 +10,6 @@ import java.time.LocalDateTime;
 public interface PaymentSchedule {
 
     boolean isPayDate(LocalDateTime date);
+
+    LocalDateTime getPayPeriodStartDate(LocalDateTime itsPayDate);
 }

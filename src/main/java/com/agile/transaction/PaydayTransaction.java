@@ -31,7 +31,7 @@ public class PaydayTransaction extends Transaction {
             Employee e = GpayrollDatabase.getEmployee(empId);
             if (Objects.nonNull(e)) {
                 if (e.isPayDate(itsPayDate)) {
-                    PayCheck pc = new PayCheck(itsPayDate);
+                    PayCheck pc = new PayCheck(e.getPayPeriodStartDate(itsPayDate), itsPayDate);
                     itsPaychecks.put(empId, pc);
                     e.payday(pc);
                 }

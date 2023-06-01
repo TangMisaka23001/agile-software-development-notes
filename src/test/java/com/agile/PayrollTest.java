@@ -216,9 +216,9 @@ public class PayrollTest extends TestCase {
         PayCheck pc = pt.getPayCheck(empId);
         assertNotNull(pc);
         assertEquals(pc.getPayPeriodEndDate(), payDate);
-        assertEquals(pay, pc.getGrossPay());
+        assertEquals(pay + pc.getDeductions(), pc.getGrossPay());
         assertEquals("Hold", pc.getField("Disposition"));
-        assertEquals(0.0, pc.getDeductions());
+//        assertEquals(0.0, pc.getDeductions());
         assertEquals(pay, pc.getNetPay());
     }
 
@@ -303,5 +303,23 @@ public class PayrollTest extends TestCase {
 
         validatePaycheck(pt, empId, payDate, 2 * 15.25);
     }
+
+    public void testSalariedUnionMemberDues() {
+        int empId = 1;
+
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.00);
+        t.execute();
+
+        int memberId = 7734;
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
+        cmt.execute();
+
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 30, 0, 0);
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePaycheck(pt, empId, payDate, 1000.00 - 37.68);
+    }
+
 
 }

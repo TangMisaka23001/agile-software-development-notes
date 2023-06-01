@@ -21,4 +21,9 @@ public class MonthlySchedule implements PaymentSchedule {
     public boolean isPayDate(LocalDateTime date) {
         return isLastDayOfMonth(date);
     }
+
+    @Override
+    public LocalDateTime getPayPeriodStartDate(LocalDateTime itsPayDate) {
+        return itsPayDate.withDayOfMonth(1);
+    }
 }

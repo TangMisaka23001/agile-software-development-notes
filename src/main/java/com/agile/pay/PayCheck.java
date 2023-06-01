@@ -16,9 +16,11 @@ public class PayCheck {
     private double netPay;
 
     private LocalDateTime itsPayDate;
+    private final LocalDateTime itsPayStartDate;
 
-    public PayCheck(LocalDateTime itsPayDate) {
+    public PayCheck(LocalDateTime itsPayStartDate, LocalDateTime itsPayDate) {
         this.itsPayDate = itsPayDate;
+        this.itsPayStartDate = itsPayStartDate;
     }
 
     public double getGrossPay() {
@@ -59,5 +61,9 @@ public class PayCheck {
 
     public LocalDateTime getPayPeriodEndDate() {
         return itsPayDate;
+    }
+
+    public LocalDateTime getPayPeriodStartDate() {
+        return itsPayStartDate;
     }
 }

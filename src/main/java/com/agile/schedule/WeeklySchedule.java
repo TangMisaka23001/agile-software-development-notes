@@ -13,4 +13,9 @@ public class WeeklySchedule implements PaymentSchedule {
     public boolean isPayDate(LocalDateTime date) {
         return date.getDayOfWeek() == DayOfWeek.FRIDAY;
     }
+
+    @Override
+    public LocalDateTime getPayPeriodStartDate(LocalDateTime itsPayDate) {
+        return null;
+    }
 }
