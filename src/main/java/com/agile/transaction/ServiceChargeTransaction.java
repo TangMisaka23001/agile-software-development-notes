@@ -28,7 +28,7 @@ public class ServiceChargeTransaction extends Transaction {
     @Override
     public void execute() {
         Employee e = GpayrollDatabase.getUnionMember(itsMemberId);
-        Affiliation af = e.getItsAffiliation();
+        Affiliation af = e.getAffiliation();
         UnionAffiliation uaf = (UnionAffiliation) af;
         if (Objects.nonNull(uaf)) {
             uaf.addServiceCharge(itsDate, itsCharge);

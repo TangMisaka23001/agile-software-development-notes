@@ -25,7 +25,7 @@ public class ChangeUnaffiliatedTransaction extends ChangeAffiliationTransaction 
 
     @Override
     public void recordMembership(Employee e) {
-        Affiliation af = e.getItsAffiliation();
+        Affiliation af = e.getAffiliation();
         UnionAffiliation uf = (UnionAffiliation) af;
         if (Objects.nonNull(uf)) {
             int memberId = uf.getMemberId();

@@ -79,11 +79,11 @@ public class Employee {
         this.itsPayMethod = paymentMethod;
     }
 
-    public Affiliation getItsAffiliation() {
+    public Affiliation getAffiliation() {
         return itsAffiliation;
     }
 
-    public void setItsAffiliation(Affiliation itsAffiliation) {
+    public void setAffiliation(Affiliation itsAffiliation) {
         this.itsAffiliation = itsAffiliation;
     }
 

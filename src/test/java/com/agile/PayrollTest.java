@@ -109,7 +109,7 @@ public class PayrollTest extends TestCase {
 
         int memberId = 86;
         UnionAffiliation af = new UnionAffiliation(memberId, 12.95);
-        e.setItsAffiliation(af);
+        e.setAffiliation(af);
         GpayrollDatabase.addUnionMember(memberId, e);
         ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, LocalDateTime.of(2001, 11, 01, 0, 0), 12.95);
         sct.execute();
@@ -163,7 +163,7 @@ public class PayrollTest extends TestCase {
         Employee e = GpayrollDatabase.getEmployee(empId);
         assertNotNull(e);
 
-        Affiliation af = e.getItsAffiliation();
+        Affiliation af = e.getAffiliation();
         assertNotNull(af);
         UnionAffiliation uf = (UnionAffiliation) af;
         assertNotNull(uf);
@@ -347,6 +347,38 @@ public class PayrollTest extends TestCase {
         assertEquals("Hold", pc.getField("Disposition"));
         assertEquals(9.42 + 19.42, pc.getDeductions());
         assertEquals((8 * 15.24) - (9.42 + 19.42), pc.getNetPay());
+    }
+
+    public void testServiceChargeSpanningMultiplePayPeriods() {
+        int empId = 1;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.24);
+        t.execute();
+
+        int memberId = 7734;
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
+        cmt.execute();
+
+        LocalDateTime earlyDate = LocalDateTime.of(2001, 11, 2, 0, 0);
+        LocalDateTime payDate = LocalDateTime.of(2001, 11, 9, 0, 0);
+        LocalDateTime lateDate = LocalDateTime.of(2001, 11, 16, 0, 0);
+        ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, payDate, 19.42);
+        sct.execute();
+        ServiceChargeTransaction sctEarly = new ServiceChargeTransaction(memberId, earlyDate, 100.00);
+        sctEarly.execute();
+        ServiceChargeTransaction sctLate = new ServiceChargeTransaction(memberId, lateDate, 200.00);
+        sctLate.execute();
+        TimeCardTransaction tct = new TimeCardTransaction(payDate, 8.0, empId);
+        tct.execute();
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+        PayCheck pc = pt.getPayCheck(empId);
+
+        assertNotNull(pc);
+        assertEquals(8 * 15.24, pc.getGrossPay());
+        assertEquals("Hold", pc.getField("Disposition"));
+        assertEquals(9.42 + 19.42, pc.getDeductions());
+        assertEquals((8 * 15.24) - (9.42 + 19.42), pc.getNetPay());
+
     }
 
 
